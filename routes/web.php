@@ -312,3 +312,7 @@ Route::get('/setup-tables', function () {
 
     return 'Tables created!';
 });
+
+Route::get('/setup-tables', function () {
+    return 'setup route works';
+});
