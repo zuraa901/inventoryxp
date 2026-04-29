@@ -21,7 +21,12 @@
         }
 
         $items = Inventory::all();
-        return view('inventory', compact('items'));
+       
+        return response()
+        ->view('inventory', compact('items'))
+        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
     });
 
     Route::post('/inventory/store', function (Request $request) {
@@ -109,8 +114,13 @@
         }
 
         $assets = Asset::all();
-        return view('asset', compact('assets'));
-    });
+        
+        return response()
+        ->view('asset', compact('assets'))
+        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+        });
 
     Route::post('/asset/store', function (Request $request) {
         $request->validate([
@@ -197,8 +207,13 @@
         }
 
         $assets = Asset::all();
-        return view('handover', compact('assets'));
-    });
+        
+        return response()
+        ->view('handover', compact('assets'))
+        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+        });
     Route::post('/handover/store', function (Request $request) {
         $request->validate([
             'asset_id' => 'required',
@@ -295,8 +310,13 @@
         }
 
         $histories = History::orderBy('created_at', 'desc')->get();
-        return view('history', compact('histories'));
-    });
+        
+        return response()
+        ->view('history', compact('histories'))
+        ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
+        });
 
     /*
     |--------------------------------------------------------------------------
