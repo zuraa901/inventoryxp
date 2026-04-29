@@ -334,7 +334,12 @@
             <a href="/asset">Assets</a>
             <a href="/handover">Handover</a>
             <a href="/history">History</a>
-            <a href="#">Logout</a>
+            <form action="/logout" method="POST" style="margin: 28px 0;">
+                @csrf
+                <button type="submit" style="background:none; border:none; color:white; font-size:18px; cursor:pointer; padding:0;">
+                    Logout
+                </button>
+            </form>
         </div>
 
         <div class="main" id="main">

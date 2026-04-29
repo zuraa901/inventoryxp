@@ -16,8 +16,12 @@
     |--------------------------------------------------------------------------
     */
         Route::get('/', function () {
-    $items = Inventory::all();
-    return view('inventory', compact('items'));
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $items = Inventory::all();
+        return view('inventory', compact('items'));
     });
 
     Route::post('/inventory/store', function (Request $request) {
@@ -99,7 +103,11 @@
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/asset', function () {
+   Route::get('/asset', function () {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
         $assets = Asset::all();
         return view('asset', compact('assets'));
     });
@@ -184,10 +192,13 @@
     */
 
     Route::get('/handover', function () {
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
         $assets = Asset::all();
         return view('handover', compact('assets'));
     });
-
     Route::post('/handover/store', function (Request $request) {
         $request->validate([
             'asset_id' => 'required',
@@ -222,12 +233,20 @@
     |--------------------------------------------------------------------------
     */
 
-    Route::get('/register', function () {
-        return view('auth.register');
+   Route::get('/login', function () {
+        if (Auth::check()) {
+            return redirect('/');
+        }
+
+        return view('auth.login');
     });
 
-    Route::get('/login', function () {
-        return view('auth.login');
+    Route::get('/register', function () {
+        if (Auth::check()) {
+            return redirect('/');
+        }
+
+        return view('auth.register');
     });
 
     Route::post('/register/store', function (Request $request) {
@@ -271,48 +290,25 @@
     */
 
     Route::get('/history', function () {
-    $histories = History::orderBy('created_at', 'desc')->get();
-    return view('history', compact('histories'));
-});
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
-Route::get('/setup-tables', function () {
-    \Illuminate\Support\Facades\Schema::create('inventory', function ($table) {
-        $table->increments('id');
-        $table->string('kode_barang', 50)->nullable();
-        $table->string('nama_barang', 100)->nullable();
-        $table->string('jenis_barang', 100)->nullable();
-        $table->integer('stok')->nullable();
+        $histories = History::orderBy('created_at', 'desc')->get();
+        return view('history', compact('histories'));
     });
 
-    \Illuminate\Support\Facades\Schema::create('assets', function ($table) {
-        $table->increments('id');
-        $table->string('kode_asset', 50)->nullable();
-        $table->string('nama_asset', 100)->nullable();
-        $table->string('status', 50)->nullable();
-        $table->string('lokasi', 100)->nullable();
+    /*
+    |--------------------------------------------------------------------------
+    | logout
+    |--------------------------------------------------------------------------
+    */
+
+    Route::post('/logout', function (Request $request) {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     });
-
-    \Illuminate\Support\Facades\Schema::create('asset_handover', function ($table) {
-        $table->increments('id');
-        $table->integer('asset_id');
-        $table->string('penerima', 100);
-        $table->string('lokasi', 100);
-        $table->date('tanggal');
-    });
-
-    \Illuminate\Support\Facades\Schema::create('history', function ($table) {
-        $table->increments('id');
-        $table->string('user_name', 100)->nullable();
-        $table->string('activity', 100);
-        $table->string('target_type', 100)->nullable();
-        $table->string('target_name', 150)->nullable();
-        $table->text('description')->nullable();
-        $table->timestamp('created_at')->useCurrent();
-    });
-
-    return 'Tables created!';
-});
-
-Route::get('/setup-tables', function () {
-    return 'setup route works';
-});
