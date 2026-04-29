@@ -274,3 +274,8 @@
     $histories = History::orderBy('created_at', 'desc')->get();
     return view('history', compact('histories'));
 });
+
+Route::get('/migrate', function () {
+    \Artisan::call('migrate', ['--force' => true]);
+    return 'Migration done!';
+});
