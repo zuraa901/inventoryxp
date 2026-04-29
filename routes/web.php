@@ -275,3 +275,40 @@
     return view('history', compact('histories'));
 });
 
+Route::get('/setup-tables', function () {
+    \Illuminate\Support\Facades\Schema::create('inventory', function ($table) {
+        $table->increments('id');
+        $table->string('kode_barang', 50)->nullable();
+        $table->string('nama_barang', 100)->nullable();
+        $table->string('jenis_barang', 100)->nullable();
+        $table->integer('stok')->nullable();
+    });
+
+    \Illuminate\Support\Facades\Schema::create('assets', function ($table) {
+        $table->increments('id');
+        $table->string('kode_asset', 50)->nullable();
+        $table->string('nama_asset', 100)->nullable();
+        $table->string('status', 50)->nullable();
+        $table->string('lokasi', 100)->nullable();
+    });
+
+    \Illuminate\Support\Facades\Schema::create('asset_handover', function ($table) {
+        $table->increments('id');
+        $table->integer('asset_id');
+        $table->string('penerima', 100);
+        $table->string('lokasi', 100);
+        $table->date('tanggal');
+    });
+
+    \Illuminate\Support\Facades\Schema::create('history', function ($table) {
+        $table->increments('id');
+        $table->string('user_name', 100)->nullable();
+        $table->string('activity', 100);
+        $table->string('target_type', 100)->nullable();
+        $table->string('target_name', 150)->nullable();
+        $table->text('description')->nullable();
+        $table->timestamp('created_at')->useCurrent();
+    });
+
+    return 'Tables created!';
+});
