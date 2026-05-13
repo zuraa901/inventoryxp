@@ -1,6 +1,7 @@
     <?php
 
     use Illuminate\Support\Facades\Route;
+    use Illuminate\Support\Facades\Hash;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
 
@@ -274,7 +275,7 @@
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect('/login')->with('success', 'Register berhasil! Silakan login.');
@@ -330,5 +331,9 @@
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        return redirect('/login');
+    });
+
+    Route::get('/login/check', function () {
         return redirect('/login');
     });
