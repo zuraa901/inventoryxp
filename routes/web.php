@@ -337,3 +337,7 @@
     Route::get('/login/check', function () {
         return redirect('/login');
     });
+
+    Route::middleware('auth')->group(function () {
+
+});
