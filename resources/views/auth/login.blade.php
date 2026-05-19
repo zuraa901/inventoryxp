@@ -135,10 +135,17 @@
             height:100%;
             background:linear-gradient(to right,#2563eb,#0f3ca6);
             border-radius:40px;
-            left:0;
             top:0;
             transition:0.4s ease;
         }
+
+        .login-switch .slider{
+                left:0;
+            }
+
+            .register-switch .slider{
+                left:50%;
+            }
 
         .switch button{
             flex:1;
@@ -321,6 +328,19 @@
             <div class="title">Register</div>
             <div class="subtitle">Create your account first</div>
 
+            <div class="switch register-switch">
+
+                <div class="slider"></div>
+
+                <button onclick="showLogin()">
+                    Sign In
+                </button>
+
+                <button class="active-text">
+                    Sign Up
+                </button>
+
+            </div>
            
             <form action="/register/store" method="POST">
                 @csrf
@@ -371,43 +391,43 @@
 <script>
     const container = document.getElementById("container");
 
-    const slider = document.getElementById("slider");
+const slider = document.getElementById("slider");
 
-    const loginBtn = document.getElementById("loginBtn");
+const loginBtn = document.getElementById("loginBtn");
 
-    const registerBtn = document.getElementById("registerBtn");
+const registerBtn = document.getElementById("registerBtn");
 
-    function showRegister(){
+function showRegister(){
 
-        container.classList.add("active");
+    container.classList.add("active");
 
-        slider.style.left = "50%";
+    slider.style.left = "50%";
 
-        loginBtn.classList.remove("active-text");
+    loginBtn.classList.remove("active-text");
 
-        registerBtn.classList.add("active-text");
-    }
+    registerBtn.classList.add("active-text");
+}
 
-    function showLogin(){
+function showLogin(){
 
-        container.classList.remove("active");
+    container.classList.remove("active");
 
-        slider.style.left = "0";
+    slider.style.left = "0";
 
-        loginBtn.classList.add("active-text");
+    loginBtn.classList.add("active-text");
 
-        registerBtn.classList.remove("active-text");
-    }
+    registerBtn.classList.remove("active-text");
+}
 
-    function togglePassword(id){
+function togglePassword(id){
 
-        const input = document.getElementById(id);
+    const input = document.getElementById(id);
 
-        input.type =
-        input.type === "password"
-        ? "text"
-        : "password";
-    }
+    input.type =
+    input.type === "password"
+    ? "text"
+    : "password";
+}
     
     
 
