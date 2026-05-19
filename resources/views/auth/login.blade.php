@@ -118,28 +118,42 @@
         }
 
         .switch{
+            position: relative;
             width:100%;
             height:58px;
             background:#f3f4f6;
             border-radius:40px;
             display:flex;
-            padding:6px;
+            align-items:center;
             margin-bottom:30px;
+            overflow:hidden;
+        }
+
+        .slider{
+            position:absolute;
+            width:50%;
+            height:100%;
+            background:linear-gradient(to right,#2563eb,#0f3ca6);
+            border-radius:40px;
+            left:0;
+            top:0;
+            transition:0.4s ease;
         }
 
         .switch button{
             flex:1;
+            height:100%;
             border:none;
-            border-radius:40px;
+            background:none;
             cursor:pointer;
             font-size:16px;
             font-weight:bold;
-            background:none;
+            z-index:2;
+            color:#111827;
             transition:0.3s;
         }
 
-        .switch .active-btn{
-            background:linear-gradient(to right,#2563eb,#0f3ca6);
+        .switch button.active-text{
             color:white;
         }
 
@@ -254,9 +268,20 @@
             <div class="title">Login</div>
             <div class="subtitle">Please login to continue</div>
 
-            <div class="switch">
-                <button class="active-btn">Sign In</button>
-                <button onclick="showRegister()">Sign Up</button>
+           <div class="switch">
+
+                <div class="slider" id="slider"></div>
+
+                <button class="active-text" id="loginBtn"
+                onclick="showLogin()">
+                    Sign In
+                </button>
+
+                <button id="registerBtn"
+                onclick="showRegister()">
+                    Sign Up
+                </button>
+
             </div>
 
             <form action="/login/check" method="POST">
@@ -296,11 +321,7 @@
             <div class="title">Register</div>
             <div class="subtitle">Create your account first</div>
 
-            <div class="switch">
-                <button onclick="showLogin()">Sign In</button>
-                <button class="active-btn">Sign Up</button>
-            </div>
-
+           
             <form action="/register/store" method="POST">
                 @csrf
 
@@ -348,27 +369,47 @@
 </div>
 
 <script>
-
     const container = document.getElementById("container");
 
+    const slider = document.getElementById("slider");
+
+    const loginBtn = document.getElementById("loginBtn");
+
+    const registerBtn = document.getElementById("registerBtn");
+
     function showRegister(){
+
         container.classList.add("active");
+
+        slider.style.left = "50%";
+
+        loginBtn.classList.remove("active-text");
+
+        registerBtn.classList.add("active-text");
     }
 
     function showLogin(){
+
         container.classList.remove("active");
+
+        slider.style.left = "0";
+
+        loginBtn.classList.add("active-text");
+
+        registerBtn.classList.remove("active-text");
     }
 
     function togglePassword(id){
 
         const input = document.getElementById(id);
 
-        if(input.type === "password"){
-            input.type = "text";
-        }else{
-            input.type = "password";
-        }
+        input.type =
+        input.type === "password"
+        ? "text"
+        : "password";
     }
+    
+    
 
 </script>
 
