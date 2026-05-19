@@ -3,353 +3,374 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - InventoryXP</title>
+    <title>InventoryXP</title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
         }
 
-        body {
-            background: #f2f3f7;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        body{
+            background:#f2f3f7;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
         }
 
-                .login-wrapper {
-            width: 92%;
-            max-width: 1350px;
-            height: 90vh;
-            background: #111827;
-            border-radius: 40px;
-            padding: 18px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        .container{
+            width:92%;
+            max-width:1350px;
+            height:90vh;
+            background:#111827;
+            border-radius:40px;
+            overflow:hidden;
+            display:flex;
+            box-shadow:0 15px 40px rgba(0,0,0,0.25);
         }
 
-        .left-panel {
-            width: 48%;
-            background: white;
-            border-radius: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
+        .left{
+            width:50%;
+            background:white;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            position:relative;
+            overflow:hidden;
         }
 
-        .right-panel {
-            width: 52%;
-            position: relative;
-            background: linear-gradient(
+        .right{
+            width:50%;
+            background:linear-gradient(
                 135deg,
                 #041b52,
                 #0f3ca6,
                 #2563eb
             );
-            overflow: hidden;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:white;
+            text-align:center;
+            padding:40px;
         }
 
-                .right-panel::before {
-            content: "";
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 50%;
-            top: -200px;
-            right: -150px;
-            filter: blur(20px);
+        .right h1{
+            font-size:60px;
+            margin-bottom:16px;
         }
 
-        .right-panel::after {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 50%;
-            bottom: -150px;
-            left: -120px;
-            filter: blur(20px);
+        .right p{
+            font-size:22px;
+            opacity:0.9;
         }
 
-        .right-content h1 {
-            font-size: 58px;
-            font-weight: bold;
-            margin-bottom: 16px;
-            letter-spacing: 2px;
+        .form-box{
+            width:100%;
+            max-width:420px;
+            position:absolute;
+            transition:0.5s;
         }
 
-        .right-content p {
-            font-size: 22px;
-            max-width: 400px;
-            line-height: 1.6;
-            opacity: 0.9;
+        .login-form{
+            left:50%;
+            transform:translateX(-50%);
         }
 
-        .right-content {
-            position: relative;
-            z-index: 2;
-            color: white;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 40px;
+        .register-form{
+            left:150%;
+            transform:translateX(-50%);
         }
 
-
-       
-
-        .auth-card {
-            width: 100%;
-            max-width: 420px;
-            background: white;
-            border-radius: 26px;
-            padding: 40px 36px;
+        .container.active .login-form{
+            left:-100%;
         }
 
-        .form-group input:focus {
-            border-color: #2563eb;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(37,99,235,0.12);
+        .container.active .register-form{
+            left:50%;
         }
 
-        .submit-btn:hover {
-           transform: translateY(-2px);
-            opacity: 0.95;
+        .brand{
+            text-align:center;
+            font-size:28px;
+            font-weight:bold;
+            color:#041b52;
+            margin-bottom:20px;
         }
 
-        .brand {
-            text-align: center;
-            font-size: 28px;
-            font-weight: bold;
-            color: #041b52;
-            margin-bottom: 26px;
+        .title{
+            text-align:center;
+            font-size:58px;
+            font-weight:bold;
+            color:#041b52;
+            margin-bottom:10px;
         }
 
-        .title {
-            text-align: center;
-            font-size: 58px;
-            font-weight: bold;
-            color: #041b52;
-            margin-bottom: 14px;
+        .subtitle{
+            text-align:center;
+            font-size:18px;
+            color:#6b7280;
+            margin-bottom:30px;
         }
 
-        .subtitle {
-            text-align: center;
-            font-size: 20px;
-            color: #6b7280;
-            margin-bottom: 42px;
+        .switch{
+            width:100%;
+            height:58px;
+            background:#f3f4f6;
+            border-radius:40px;
+            display:flex;
+            padding:6px;
+            margin-bottom:30px;
         }
 
-        .auth-switch {
-            width: 100%;
-            height: 58px;
-            background: #e5e7eb;
-            border-radius: 40px;
-            display: flex;
-            padding: 6px;
-            margin-bottom: 30px;
+        .switch button{
+            flex:1;
+            border:none;
+            border-radius:40px;
+            cursor:pointer;
+            font-size:16px;
+            font-weight:bold;
+            background:none;
+            transition:0.3s;
         }
 
-        .switch-btn {
-            flex: 1;
-            border-radius: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-            color: #6b7280;
-            font-weight: 600;
-            font-size: 17px;
-            transition: 0.3s;
+        .switch .active-btn{
+            background:linear-gradient(to right,#2563eb,#0f3ca6);
+            color:white;
         }
 
-        .switch-btn.active {
-            background: linear-gradient(to right, #2563eb, #0f3ca6);
-            color: white !important;
-            box-shadow: 0 6px 18px rgba(37,99,235,0.35);
-            transform: scale(1.02);
+        .form-group{
+            margin-bottom:20px;
         }
 
-        .form-group {
-            margin-bottom: 22px;
+        .form-group label{
+            display:block;
+            margin-bottom:8px;
+            font-size:17px;
         }
 
-        .form-group label {
-            display: block;
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #111827;
+        .form-group input{
+            width:100%;
+            height:56px;
+            border:1px solid #e5e7eb;
+            background:#f9fafb;
+            border-radius:14px;
+            padding:0 16px;
+            font-size:16px;
+            outline:none;
         }
 
-        .form-group input {
-            width: 100%;
-            height: 56px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            border-radius: 14px;
-            padding: 0 16px;
-            font-size: 16px;
-            outline: none;
+        .form-group input:focus{
+            border-color:#2563eb;
+            background:white;
+            box-shadow:0 0 0 4px rgba(37,99,235,0.12);
         }
 
-        .password-wrap {
-            position: relative;
+        .password-wrap{
+            position:relative;
         }
 
-        .toggle-password {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
+        .toggle-password{
+            position:absolute;
+            right:14px;
+            top:50%;
+            transform:translateY(-50%);
+            border:none;
+            background:none;
+            cursor:pointer;
         }
 
-        .submit-btn {
-            width: 100%;
-            height: 58px;
-           background: linear-gradient(to right, #2563eb, #0f3ca6);
-            transition: 0.3s;
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
+        .submit-btn{
+            width:100%;
+            height:58px;
+            border:none;
+            border-radius:14px;
+            background:linear-gradient(to right,#2563eb,#0f3ca6);
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+            margin-top:10px;
         }
 
-        .bottom-text {
-            text-align: center;
-            margin-top: 26px;
-            font-size: 17px;
-            color: #111827;
+        .submit-btn:hover{
+            transform:translateY(-2px);
         }
 
-        .bottom-text a {
-            color: #2563eb;
-            text-decoration: none;
-        }
+        @media(max-width:900px){
 
-        .bottom-text a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 900px) {
-
-            .login-wrapper {
-                flex-direction: column;
-                height: auto;
+            .container{
+                flex-direction:column;
+                height:auto;
             }
 
-            .right-panel {
-                display: none;
+            .right{
+                display:none;
             }
 
-            .left-panel {
-                width: 100%;
+            .left{
+                width:100%;
+                padding:60px 0;
+            }
+
+            .form-box{
+                position:relative;
+                left:auto !important;
+                transform:none !important;
+                margin:auto;
+            }
+
+            .register-form{
+                display:none;
+            }
+
+            .container.active .login-form{
+                display:none;
+            }
+
+            .container.active .register-form{
+                display:block;
             }
         }
+
     </style>
 </head>
+
 <body>
-    <div class="login-wrapper">
 
-        <div class="left-panel">
-            <div class="auth-card">
-                <div class="brand">Asset System</div>
-                <div class="title">Login</div>
-                <div class="subtitle">Please login to continue</div>
+<div class="container" id="container">
 
-                <div class="auth-switch">
+    <div class="left">
 
-                    <a href="/login"
-                    class="switch-btn {{ request()->is('login') ? 'active' : '' }}">
-                        Sign In
-                    </a>
+        <!-- LOGIN -->
+        <div class="form-box login-form">
 
-                    <a href="/register"
-                    class="switch-btn {{ request()->is('register') ? 'active' : '' }}">
-                        Sign Up
-                    </a>
+            <div class="brand">InventoryXP</div>
+            <div class="title">Login</div>
+            <div class="subtitle">Please login to continue</div>
 
+            <div class="switch">
+                <button class="active-btn">Sign In</button>
+                <button onclick="showRegister()">Sign Up</button>
+            </div>
+
+            <form action="/login/check" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email">
                 </div>
 
-                    @if(session('success'))
-                        <div style="background:#e7f7ec; color:#1f7a3d; padding:12px; border-radius:8px; margin-bottom:16px;">
-                        {{ session('success') }}
-                        </div>
-                    @endif
+                <div class="form-group">
+                    <label>Password</label>
 
-                        @if(session('success'))
-                            <div style="background:#e7f7ec; color:#1f7a3d; padding:12px; border-radius:8px; margin-bottom:16px;">
-                                {{ session('success') }}
-                            </div>
-                        @endif
+                    <div class="password-wrap">
+                        <input type="password" id="loginPassword" name="password">
 
-                        @if($errors->any())
-                            <div style="background:#ffeaea; color:#b42318; padding:12px; border-radius:8px; margin-bottom:16px;">
-                                <ul style="margin-left:18px;">
-                                    @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        <form action="/login/check" method="POST">
-                            @csrf
-
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <div class="password-wrap">
-                                    <input type="password" id="password" name="password">
-                                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)">👁️</button>
-                                </div>
-                            </div>
-
-                            <button type="submit" class="submit-btn">Login</button>
-                        </form>
-
-                    <div class="bottom-text">
-                        Don’t have an account? <a href="/register">Register</a>
+                        <button type="button"
+                        class="toggle-password"
+                        onclick="togglePassword('loginPassword')">
+                            👁️
+                        </button>
                     </div>
-            </div>  
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Login
+                </button>
+
+            </form>
+
         </div>
 
-             <div class="right-panel">
-               <div class="right-content">
-                    <h1>InventoryXP</h1>
-                    <p>Smart Inventory & Asset Management System</p>
-                </div>
+        <!-- REGISTER -->
+        <div class="form-box register-form">
+
+            <div class="brand">InventoryXP</div>
+            <div class="title">Register</div>
+            <div class="subtitle">Create your account first</div>
+
+            <div class="switch">
+                <button onclick="showLogin()">Sign In</button>
+                <button class="active-btn">Sign Up</button>
             </div>
+
+            <form action="/register/store" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+
+                    <div class="password-wrap">
+                        <input type="password" id="registerPassword" name="password">
+
+                        <button type="button"
+                        class="toggle-password"
+                        onclick="togglePassword('registerPassword')">
+                            👁️
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Register
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 
+    <div class="right">
+        <div>
+            <h1>InventoryXP</h1>
+            <p>Smart Inventory & Asset Management System</p>
+        </div>
+    </div>
 
+</div>
 
-    <script>
-        function togglePassword(inputId, btn) {
-            const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
+<script>
+
+    const container = document.getElementById("container");
+
+    function showRegister(){
+        container.classList.add("active");
+    }
+
+    function showLogin(){
+        container.classList.remove("active");
+    }
+
+    function togglePassword(id){
+
+        const input = document.getElementById(id);
+
+        if(input.type === "password"){
+            input.type = "text";
+        }else{
+            input.type = "password";
         }
-    </script>
+    }
+
+</script>
+
 </body>
 </html>
