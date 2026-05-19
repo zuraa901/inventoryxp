@@ -78,6 +78,30 @@
             filter: blur(20px);
         }
 
+        .right-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .right-content h1 {
+            font-size: 58px;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+
+        .right-content p {
+            font-size: 22px;
+            opacity: 0.9;
+        }
+
         .auth-card {
             width: 100%;
             max-width: 420px;
@@ -218,50 +242,53 @@
                         </div>
                     @endif
 
-                @if(session('success'))
-                    <div style="background:#e7f7ec; color:#1f7a3d; padding:12px; border-radius:8px; margin-bottom:16px;">
-                        {{ session('success') }}
+                        @if(session('success'))
+                            <div style="background:#e7f7ec; color:#1f7a3d; padding:12px; border-radius:8px; margin-bottom:16px;">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div style="background:#ffeaea; color:#b42318; padding:12px; border-radius:8px; margin-bottom:16px;">
+                                <ul style="margin-left:18px;">
+                                    @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="/login/check" method="POST">
+                            @csrf
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="{{ old('email') }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="password-wrap">
+                                    <input type="password" id="password" name="password">
+                                    <button type="button" class="toggle-password" onclick="togglePassword('password', this)">👁️</button>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="submit-btn">Login</button>
+                        </form>
+
+                    <div class="bottom-text">
+                        Don’t have an account? <a href="/register">Register</a>
                     </div>
-                @endif
-
-                @if($errors->any())
-                    <div style="background:#ffeaea; color:#b42318; padding:12px; border-radius:8px; margin-bottom:16px;">
-                        <ul style="margin-left:18px;">
-                            @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form action="/login/check" method="POST">
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="{{ old('email') }}">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="password-wrap">
-                            <input type="password" id="password" name="password">
-                            <button type="button" class="toggle-password" onclick="togglePassword('password', this)">👁️</button>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="submit-btn">Login</button>
-                </form>
-
-                <div class="bottom-text">
-                    Don’t have an account? <a href="/register">Register</a>
-                </div>
-           </div>
-    </div>
-
-        <div class="right-panel">
-            <div class="overlay"></div>
+            </div>  
         </div>
+
+             <div class="right-panel">
+               <div class="right-content">
+                    <h1>InventoryXP</h1>
+                    <p>Smart Inventory & Asset Management System</p>
+                </div>
+            </div>
 
     </div>
 
