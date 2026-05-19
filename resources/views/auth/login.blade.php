@@ -78,6 +78,20 @@
             filter: blur(20px);
         }
 
+        .right-content h1 {
+            font-size: 58px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .right-content p {
+            font-size: 22px;
+            max-width: 400px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
         .right-content {
             position: relative;
             z-index: 2;
@@ -91,16 +105,8 @@
             padding: 40px;
         }
 
-        .right-content h1 {
-            font-size: 58px;
-            margin-bottom: 16px;
-            font-weight: bold;
-        }
 
-        .right-content p {
-            font-size: 22px;
-            opacity: 0.9;
-        }
+       
 
         .auth-card {
             width: 100%;
@@ -142,6 +148,36 @@
             font-size: 20px;
             color: #6b7280;
             margin-bottom: 42px;
+        }
+
+        .auth-switch {
+            width: 100%;
+            height: 58px;
+            background: #e5e7eb;
+            border-radius: 40px;
+            display: flex;
+            padding: 6px;
+            margin-bottom: 30px;
+        }
+
+        .switch-btn {
+            flex: 1;
+            border-radius: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 17px;
+            transition: 0.3s;
+        }
+
+        .switch-btn.active {
+            background: linear-gradient(to right, #2563eb, #0f3ca6);
+            color: white !important;
+            box-shadow: 0 6px 18px rgba(37,99,235,0.35);
+            transform: scale(1.02);
         }
 
         .form-group {
@@ -236,6 +272,21 @@
                 <div class="brand">Asset System</div>
                 <div class="title">Login</div>
                 <div class="subtitle">Please login to continue</div>
+
+                <div class="auth-switch">
+
+                    <a href="/login"
+                    class="switch-btn {{ request()->is('login') ? 'active' : '' }}">
+                        Sign In
+                    </a>
+
+                    <a href="/register"
+                    class="switch-btn {{ request()->is('register') ? 'active' : '' }}">
+                        Sign Up
+                    </a>
+
+                </div>
+
                     @if(session('success'))
                         <div style="background:#e7f7ec; color:#1f7a3d; padding:12px; border-radius:8px; margin-bottom:16px;">
                         {{ session('success') }}
