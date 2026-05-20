@@ -31,6 +31,8 @@
             overflow:hidden;
             display:flex;
             box-shadow:0 15px 40px rgba(0,0,0,0.25);
+            backdrop-filter: blur(10px);
+            border:1px solid rgba(255,255,255,0.15);
         }
 
         .left{
@@ -69,30 +71,42 @@
             opacity:0.9;
         }
 
-        .form-box{
+       .form-box{
             width:100%;
             max-width:420px;
             position:absolute;
-            transition:0.5s;
+            opacity:0;
+            visibility:hidden;
+            transform:translateY(20px) scale(0.98);
+            transition:
+            opacity .45s ease,
+            transform .45s ease,
+            visibility .45s;
         }
 
         .login-form{
-            left:50%;
-            transform:translateX(-50%);
+            opacity:1;
+            visibility:visible;
+            transform:translateY(0) scale(1);
         }
 
+        .container.active .login-form{
+            opacity:0;
+            visibility:hidden;
+            transform:translateY(-20px) scale(0.96);
+        }
+
+        .container.active .register-form{
+            opacity:1;
+            visibility:visible;
+            transform:translateY(0) scale(1);
+        }
+       
         .register-form{
             left:150%;
             transform:translateX(-50%);
         }
 
-        .container.active .login-form{
-            left:-100%;
-        }
-
-        .container.active .register-form{
-            left:50%;
-        }
 
         .brand{
             text-align:center;
@@ -118,27 +132,61 @@
         }
 
         .switch{
-            position: relative;
-            width:100%;
-            height:58px;
-            background:#f3f4f6;
-            border-radius:40px;
-            display:flex;
-            align-items:center;
-            margin-bottom:30px;
-            overflow:hidden;
-        }
+                position:relative;
+                width:100%;
+                height:60px;
+                background:#f3f4f6;
+                border-radius:999px;
+                display:flex;
+                align-items:center;
+                margin-bottom:35px;
+                padding:5px;
+                overflow:hidden;
+                box-shadow:
+                inset 0 2px 5px rgba(0,0,0,0.05);
+            }
 
-        .slider{
-            position:absolute;
-            width:50%;
-            height:100%;
-            background:linear-gradient(to right,#2563eb,#0f3ca6);
-            border-radius:40px;
-            top:0;
-            transition:0.4s ease;
-        }
+            .slider{
+                position:absolute;
+                width:calc(50% - 5px);
+                height:50px;
+                background:linear-gradient(
+                    135deg,
+                    #3b82f6,
+                    #1d4ed8
+                );
+                border-radius:999px;
+                top:5px;
+                left:5px;
+                transition:
+                transform .4s cubic-bezier(.77,0,.18,1),
+                background .3s ease;
+                box-shadow:
+                0 8px 20px rgba(37,99,235,0.35);
+            }
 
+            .container.active .slider{
+                transform:translateX(100%);
+            }
+
+            .switch button{
+                flex:1;
+                height:100%;
+                border:none;
+                background:none;
+                cursor:pointer;
+                font-size:15px;
+                font-weight:600;
+                z-index:2;
+                color:#6b7280;
+                transition:color .3s ease;
+            }
+
+            .switch button.active-text{
+                color:white;
+            }
+
+       
         .login-switch .slider{
                 left:0;
             }
@@ -147,22 +195,7 @@
                 left:50%;
             }
 
-        .switch button{
-            flex:1;
-            height:100%;
-            border:none;
-            background:none;
-            cursor:pointer;
-            font-size:16px;
-            font-weight:bold;
-            z-index:2;
-            color:#111827;
-            transition:0.3s;
-        }
-
-        .switch button.active-text{
-            color:white;
-        }
+       
 
         .form-group{
             margin-bottom:20px;
@@ -176,13 +209,19 @@
 
         .form-group input{
             width:100%;
-            height:56px;
+            height:58px;
+            padding:0 18px;
+            transition:.3s ease;
             border:1px solid #e5e7eb;
             background:#f9fafb;
             border-radius:14px;
             padding:0 16px;
             font-size:16px;
             outline:none;
+        }
+
+        .form-group input:hover{
+            border-color:#cbd5e1;
         }
 
         .form-group input:focus{
@@ -279,8 +318,8 @@
 
                 <div class="slider" id="slider"></div>
 
-                <button class="active-text" id="loginBtn"
-                onclick="showLogin()">
+                <button class="active-text login-trigger"
+                    onclick="showLogin()">
                     Sign In
                 </button>
 
@@ -332,7 +371,8 @@
 
                 <div class="slider"></div>
 
-                <button onclick="showLogin()">
+               <button class="register-trigger"
+onclick="showRegister()"></button>
                     Sign In
                 </button>
 
@@ -389,34 +429,43 @@
 </div>
 
 <script>
-    const container = document.getElementById("container");
 
-const slider = document.getElementById("slider");
+const container = document.getElementById("container");
 
-const loginBtn = document.getElementById("loginBtn");
+const loginButtons =
+document.querySelectorAll(".login-trigger");
 
-const registerBtn = document.getElementById("registerBtn");
+const registerButtons =
+document.querySelectorAll(".register-trigger");
 
 function showRegister(){
 
     container.classList.add("active");
 
-    slider.style.left = "50%";
+    document.querySelectorAll(".switch").forEach(sw=>{
 
-    loginBtn.classList.remove("active-text");
+        sw.querySelectorAll("button")[0]
+        .classList.remove("active-text");
 
-    registerBtn.classList.add("active-text");
+        sw.querySelectorAll("button")[1]
+        .classList.add("active-text");
+
+    });
 }
 
 function showLogin(){
 
     container.classList.remove("active");
 
-    slider.style.left = "0";
+    document.querySelectorAll(".switch").forEach(sw=>{
 
-    loginBtn.classList.add("active-text");
+        sw.querySelectorAll("button")[0]
+        .classList.add("active-text");
 
-    registerBtn.classList.remove("active-text");
+        sw.querySelectorAll("button")[1]
+        .classList.remove("active-text");
+
+    });
 }
 
 function togglePassword(id){
@@ -428,8 +477,6 @@ function togglePassword(id){
     ? "text"
     : "password";
 }
-    
-    
 
 </script>
 
